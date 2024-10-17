@@ -11,6 +11,7 @@ use App\Models\Post;
 class PostController extends Controller
 {
     public function index(){
-        return PostResource::collection(Post::all());
+        info(Post::find(2)->category);
+        return PostResource::collection(Post::with('category')->paginate(10));
     }
 }
