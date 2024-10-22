@@ -33,8 +33,13 @@ class PostController extends Controller
     }
 
     public function store(StorePostRequest $request){
-        $post = Post::create($request->validated());
-        info($post);
+        try{
+            $post = Post::create($request->validated());
+        }
+        catch (\ValidationException $ex) {
+            info($ex->errors());
+            return response()->json(['errors' =>$ex->errors()], 422); 
+        }
         return new PostResource($post);
     }
 }
