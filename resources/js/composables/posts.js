@@ -12,11 +12,19 @@ export default function usePosts(){
     
     const getPosts = async (
         page = 1,
-        category='',
+        search_category = '', 
+        search_id = '',
+        search_title = '',
+        search_content = '',
+        search_global = '', 
         orderColumn='created_at',
         orderDirection= 'desc') => {
         axios.get('/api/posts?page=' + page + 
-            '&category=' + category + 
+            '&search_category=' + search_category + 
+            '&search_id=' + search_id +
+            '&search_title=' + search_title +
+            '&search_content=' + search_content +
+            '&search_global=' + search_global +  
             '&orderColumn=' + orderColumn + 
             '&orderDirection=' + orderDirection)
             .then(response => {
