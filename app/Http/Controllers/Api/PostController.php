@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Gate;
 
 use App\Http\Requests\StorePostRequest;
 
@@ -24,9 +26,6 @@ class PostController extends Controller
         if(!in_array($orderDirection,['asc','desc'])){
             $orderDirection = 'desc';
         }
-
-        info(request()->all());
-
         $posts = Post::with('category')
             ->when(request('search_category'), function (Builder $query) { 
                 $query->where('category_id', request('search_category'));
@@ -53,6 +52,8 @@ class PostController extends Controller
     }
 
     public function store(StorePostRequest $request){
+        Gate::authorize('posts.create');
+
         try{
             if ($request->hasFile('thumbnail')) { 
                 $filename = $request->file('thumbnail')->getClientOriginalName();
@@ -72,11 +73,13 @@ class PostController extends Controller
     }
 
     public function update(Post $post,StorePostRequest $request){
+        Gate::authorize('posts.update');
         $post->update($request->validated());
         return new PostResource($post);
     }
 
     public function destroy(Post $post){
+        Gate::authorize('posts.delete');
         $post->delete();
         return response()->noContent();
     }

@@ -1,9 +1,13 @@
-import {createApp} from 'vue'
-import App from './layouts/App.vue' 
+import {createApp,onMounted} from 'vue'
 import router from './routes/index'
 import VueSweetalert2  from 'vue-sweetalert2'
-
-createApp(App)
+import useAuth from './composables/auth'
+createApp({
+    setup(){
+        const {getUser} = useAuth()
+        onMounted(getUser)
+    }
+})
     .use(router)
     .use(VueSweetalert2)
     .mount('#app')
