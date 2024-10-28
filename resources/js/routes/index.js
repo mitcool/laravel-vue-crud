@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import PostsIndex from '../components/Posts/Index.vue'
-import PostsCreate from '../components/Posts/Create.vue'
+import PostsIndex from '@/components/Posts/Index.vue'
+import PostsCreate from '@/components/Posts/Create.vue'
+import PostsEdit from '@/components/Posts/Edit.vue'
 
 const routes = [
     {
@@ -17,6 +18,14 @@ const routes = [
         name:'posts.create',
         meta: {
             title:'Add new post'
+        }
+    },
+    {
+        path: '/posts/edit/:id', 
+        component:PostsEdit,
+        name:'posts.edit',
+        meta: {
+            title:'Edit post new post'
         }
     },
 ]
